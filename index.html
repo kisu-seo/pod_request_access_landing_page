@@ -1,19 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Publish your podcasts to all platforms like Spotify, Apple Podcasts, Google Podcasts, and more.">
+  <title>Pod - Publish Your Podcasts Everywhere</title>
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
-  
-  <title>Frontend Mentor | Pod request access landing page</title>
+  <!-- Google Fonts - Chivo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@300;700&display=swap" rel="stylesheet">
+
+  <!-- CSS 파일 연결 -->
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  Publish your podcasts everywhere.
+  <!-- 메인 컨테이너 -->
+  <main class="container">
+    <!-- 로고 섹션 -->
+    <header class="header">
+      <h1 class="logo">
+        <img src="assets/desktop/logo.svg" alt="pod" class="logo__img">
+      </h1>
+    </header>
 
-  Upload your audio to Pod with a single click. We’ll then distribute your podcast to Spotify, 
-  Apple Podcasts, Google Podcasts, Pocket Casts and more!
+    <!-- 메인 콘텐츠 섹션 -->
+    <section class="hero">
+      <h2 class="hero__title">
+        <span class="hero__title--highlight">PUBLISH YOUR PODCASTS</span>
+        <span class="hero__title--normal">EVERYWHERE.</span>
+      </h2>
 
-  Request access
+      <p class="hero__description">
+        Upload your audio to Pod with a single click. We'll then distribute your podcast to Spotify, Apple Podcasts,
+        Google Podcasts, Pocket Casts and more!
+      </p>
+
+      <!-- 플랫폼 로고 섹션 -->
+      <div class="platforms">
+        <img src="assets/desktop/spotify.svg" alt="Spotify" class="platforms__logo" onerror="this.style.display='none'">
+        <img src="assets/desktop/apple-podcast.svg" alt="Apple Podcasts" class="platforms__logo"
+          onerror="this.style.display='none'">
+        <img src="assets/desktop/google-podcasts.svg" alt="Google Podcasts" class="platforms__logo"
+          onerror="this.style.display='none'">
+        <img src="assets/desktop/pocket-casts.svg" alt="Pocket Casts" class="platforms__logo"
+          onerror="this.style.display='none'">
+      </div>
+    </section>
+
+    <!-- 이메일 가입 폼 섹션 -->
+    <section class="signup">
+      <form class="signup__form" id="emailForm" novalidate>
+        <div class="form-group">
+          <label for="email" class="visually-hidden">이메일 주소</label>
+          <input type="email" id="email" name="email" class="form-group__input" placeholder="Email address"
+            aria-describedby="emailError" required>
+        </div>
+
+        <button type="submit" class="btn btn--primary">
+          Request Access
+        </button>
+      </form>
+    </section>
+
+    <!-- 에러 메시지 (signup 섹션 외부, 버튼 아래 위치) -->
+    <p id="emailError" class="form-group__error" aria-live="polite"></p>
+  </main>
+
+  <!-- JavaScript 파일 연결 -->
+  <script src="script.js" defer></script>
 </body>
+
 </html>

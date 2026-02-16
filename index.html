@@ -27,17 +27,35 @@
       </h1>
     </header>
 
-    <!-- 메인 콘텐츠 섹션 -->
-    <section class="hero">
-      <h2 class="hero__title">
-        <span class="hero__title--highlight">PUBLISH YOUR PODCASTS</span>
-        <span class="hero__title--normal">EVERYWHERE.</span>
-      </h2>
+    <!-- 콘텐츠 래퍼: 메인 콘텐츠, 가입 폼, 에러 메시지를 하나로 묶음 -->
+    <div class="content-wrapper">
+      <!-- 메인 콘텐츠 섹션 -->
+      <section class="hero">
+        <h2 class="hero__title">
+          <span class="hero__title--highlight">PUBLISH YOUR PODCASTS</span>
+          <span class="hero__title--normal">EVERYWHERE.</span>
+        </h2>
 
-      <p class="hero__description">
-        Upload your audio to Pod with a single click. We'll then distribute your podcast to Spotify, Apple Podcasts,
-        Google Podcasts, Pocket Casts and more!
-      </p>
+        <p class="hero__description">
+          Upload your audio to Pod with a single click. We'll then distribute your podcast to Spotify, Apple Podcasts,
+          Google Podcasts, Pocket Casts and more!
+        </p>
+      </section>
+
+      <!-- 이메일 가입 폼 섹션 -->
+      <section class="signup">
+        <form class="signup__form" id="emailForm" novalidate>
+          <div class="form-group">
+            <label for="email" class="visually-hidden">이메일 주소</label>
+            <input type="email" id="email" name="email" class="form-group__input" placeholder="Email address"
+              aria-describedby="emailError" required>
+          </div>
+
+          <button type="submit" class="btn btn--primary">
+            Request Access
+          </button>
+        </form>
+      </section>
 
       <!-- 플랫폼 로고 섹션 -->
       <div class="platforms">
@@ -49,25 +67,10 @@
         <img src="assets/desktop/pocket-casts.svg" alt="Pocket Casts" class="platforms__logo"
           onerror="this.style.display='none'">
       </div>
-    </section>
 
-    <!-- 이메일 가입 폼 섹션 -->
-    <section class="signup">
-      <form class="signup__form" id="emailForm" novalidate>
-        <div class="form-group">
-          <label for="email" class="visually-hidden">이메일 주소</label>
-          <input type="email" id="email" name="email" class="form-group__input" placeholder="Email address"
-            aria-describedby="emailError" required>
-        </div>
-
-        <button type="submit" class="btn btn--primary">
-          Request Access
-        </button>
-      </form>
-    </section>
-
-    <!-- 에러 메시지 (signup 섹션 외부, 버튼 아래 위치) -->
-    <p id="emailError" class="form-group__error" aria-live="polite"></p>
+      <!-- 에러 메시지 (signup 섹션 외부, 버튼 아래 위치) -->
+      <p id="emailError" class="form-group__error" aria-live="polite"></p>
+    </div>
   </main>
 
   <!-- JavaScript 파일 연결 -->

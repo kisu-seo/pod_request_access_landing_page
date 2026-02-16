@@ -1,5 +1,37 @@
+/**
+ * ========================================
+ * Pod Podcast Landing Page - 메인 스타일시트
+ * ========================================
+ * 
+ * @file styles.css
+ * @description 
+ * 
+ * ## 디자인 시스템
+ * - 반응형 Breakpoints: 모바일(~767px) / 태블릿(768px~) / 데스크톱(1024px~)
+ * - 색상 팔레트: 블루 계열 + 녹색 강조색
+ * - 타이포그래피: Chivo (Light 300 / Bold 700)
+ * - 간격 시스템: 8px 기반 배수 체계 (8, 16, 24, 32, 40...)
+ * 
+ * ## 파일 구조
+ * 1. CSS 변수 (:root)
+ * 2. 리셋 및 기본 스타일
+ * 3. 레이아웃 및 공통 컴포넌트
+ * 4. 섹션별 스타일 (header, hero, signup, platforms)
+ * 5. 미디어 쿼리 (768px, 1024px)
+ */
+
 /* ====================================
    CSS 변수 정의 (Design Tokens)
+   ====================================
+   
+   Why CSS Variables:
+   - 중앙 집중식 디자인 토큰 관리
+   - 테마 변경 시 한 곳만 수정하면 전체 반영
+   - 유지보수성 향상 및 코드 가독성 개선
+   
+   Result:
+   - 디자이너가 색상/간격 변경 요청 시 빠른 대응 가능
+   - 일관된 디자인 시스템 유지
    ==================================== */
 :root {
     /* 색상 (Colors) - style-guide.md 기반 */
@@ -15,11 +47,19 @@
     --font-family-primary: 'Chivo', sans-serif;
 
     /* 폰트 크기 */
+    --font-size-title-large: 48px;
+    /* 데스크톱 제목 */
+    --font-size-title-medium: 32px;
+    /* 모바일 제목 */
     --font-size-title: 26px;
     /* 모바일에서는 48px보다 작게 */
+    --font-size-body-large: 18px;
+    /* 데스크톱 본문 */
     --font-size-body: 15px;
     /* 모바일에서는 18px보다 작게 */
     --font-size-button: 14px;
+    --font-size-small: 12px;
+    /* 에러 메시지용 */
 
     /* 줄 간격 (Line Height) */
     --line-height-title: 120%;
@@ -33,11 +73,32 @@
     --spacing-800: 64px;
     --spacing-700: 56px;
     --spacing-500: 40px;
+    --spacing-450: 36px;
+    /* body 패딩용 */
     --spacing-400: 32px;
+    --spacing-350: 28px;
+    /* input padding, border-radius */
     --spacing-300: 24px;
+    --spacing-225: 18px;
+    /* error message min-height */
+    --spacing-175: 17.74px;
+    /* platform logos gap */
     --spacing-200: 16px;
     --spacing-100: 8px;
     --spacing-50: 4px;
+    --spacing-25: 2px;
+    /* border width */
+
+    /* 컴포넌트 크기 (Component Sizes)
+       
+       Why 고정 크기:
+       - 디자인 시안에 명시된 크기로 픽셀 퍼펙트 구현
+       - input과 button 높이를 동일하게 유지하여 시각적 일관성 확보
+       - border-radius 28px: 원형에 가까운 pill 모양 (44px 높이의 절반 이상)
+    */
+    --input-height: 44px;
+    --button-height: 44px;
+    --border-radius: 28px;
 }
 
 /* ====================================
@@ -64,8 +125,8 @@ body {
     /* 가장 어두운 블루 배경 */
     /* 배경 이미지 위에 #121725 색상의 79.93% 불투명도 마스크 추가 */
     background-image: linear-gradient(rgba(18, 23, 37, 0.7993), rgba(18, 23, 37, 0.7993)), url('assets/mobile/image-host.jpg');
-    background-size: cover;
-    /* 배경 이미지가 화면을 꽉 채우도록 */
+    background-size: auto 100%;
+    /* 배경 이미지 높이를 화면 높이에 맞추고 너비는 비율 유지 (확대 방지) */
     background-position: center top;
     /* 배경 이미지 위치 */
     background-repeat: no-repeat;
@@ -78,8 +139,8 @@ body {
     /* Flexbox 레이아웃 사용 */
     align-items: center;
     /* 세로 중앙 정렬 */
-    padding: 36px;
-    /* 상하좌우 여백을 36px로 설정 */
+    padding: var(--spacing-450);
+    /* 상하좌우 여백: 36px */
 }
 
 /* 접근성: 화면 리더에만 보이는 텍스트 */
@@ -162,12 +223,12 @@ body {
 }
 
 .hero__title {
-    font-size: 32px;
-    /* 요청하신 32px 적용 (기존 26px) */
+    font-size: var(--font-size-title-medium);
+    /* 모바일 제목 크기: 32px */
     font-weight: 300;
     /* Chivo Light 적용 */
     line-height: 120%;
-    /* 요청하신 행간 120% 적용 */
+    /* 행간 120% */
     text-transform: uppercase;
     /* 모두 대문자 */
     margin-bottom: var(--spacing-200);
@@ -191,18 +252,17 @@ body {
 }
 
 .hero__description {
-    font-size: 14px;
-    /* 요청하신 14px 적용 (기존 15px) */
+    font-size: var(--font-size-button);
+    /* 폰트 크기: 14px */
     font-weight: 300;
-    /* Chivo Light 적용 */
+    /* Chivo Light */
     line-height: 150%;
-    /* 행간 150% 적용 */
+    /* 행간 150% */
     color: var(--color-blue-300);
-    /* 블루-300 색상 적용 */
-    margin-bottom: 40px;
-    /* 요청하신 하단 마진 40px 적용 (기존 32px) */
+    /* 블루-300 색상 */
+    margin-bottom: var(--spacing-500);
+    /* 하단 여백: 40px */
     padding: 0;
-    /* 요청하신 패딩 삭제 */
 }
 
 /* ====================================
@@ -215,8 +275,8 @@ body {
     /* 세로 중앙 정렬 */
     justify-content: center;
     /* 가로 중앙 정렬 */
-    gap: 17.74px;
-    /* 요청하신 간격 17.74px 적용 */
+    gap: var(--spacing-175);
+    /* 플랫폼 로고 간격: 17.74px */
     margin-bottom: var(--spacing-500);
     /* 하단 여백: 40px */
     flex-wrap: nowrap;
@@ -258,31 +318,24 @@ body {
 
 .form-group__input {
     width: 100%;
-    /* 전체 너비 */
-    height: 44px;
-    /* 요청하신 높이 44px 적용 */
-    padding: 0 28px;
-    /* 요청하신 좌우 패딩 28px 적용 (기존 32px) */
+    height: var(--input-height);
+    /* 입력 필드 높이: 44px */
+    padding: 0 var(--spacing-350);
+    /* 좌우 패딩: 28px */
     font-family: var(--font-family-primary);
-    /* Chivo 폰트 */
-    font-size: 14px;
-    /* Text Preset 3 적용 (14px) */
+    font-size: var(--font-size-button);
+    /* Text Preset 3: 14px */
     font-weight: 700;
-    /* Bold (700) */
-    line-height: 28px;
-    /* Text Preset 3 적용 (200%) */
+    line-height: var(--line-height-button);
+    /* 200% (28px) */
     color: var(--color-white);
-    /* 입력 텍스트 색상: 흰색 (100% 불투명도) */
     background-color: var(--color-blue-900);
-    /* 블루-900 배경 */
-    border: 2px solid transparent;
-    /* 기본 테두리: 2px 투명 (에러 시 레이아웃 틀어짐 방지) */
-    border-radius: 28px;
-    /* 둥근 모서리 */
+    border: var(--spacing-25) solid transparent;
+    /* 테두리: 2px 투명 */
+    border-radius: var(--border-radius);
+    /* 둥근 모서리: 28px */
     outline: none;
-    /* 포커스 시 기본 아웃라인 제거 */
     transition: background-color 0.3s ease, border-color 0.3s ease;
-    /* 배경색 및 테두리 색상 전환 효과 */
 }
 
 .form-group__input[aria-invalid="true"] {
@@ -304,25 +357,22 @@ body {
 
 /* 에러 메시지 (섹션 외부 위치) */
 .form-group__error {
-    font-size: 12px;
-    /* 작은 폰트 크기 */
+    font-size: var(--font-size-small);
+    /* 에러 메시지 크기: 12px */
     font-weight: 700;
-    /* Bold */
     color: var(--color-red);
-    /* 빨간색 */
     text-align: center;
-    /* 중앙 정렬 */
     margin-top: var(--spacing-100);
-    /* 상단 여백: 8px (버튼과의 간격) */
-    min-height: 18px;
-    /* 최소 높이 (레이아웃 변경 방지) */
+    /* 상단 여백: 8px */
+    min-height: var(--spacing-225);
+    /* 최소 높이: 18px */
 }
 
 /* ====================================
    버튼
    ==================================== */
 .btn {
-    height: 44px;
+    height: var(--button-height);
     /* 요청하신 높이 44px 적용 */
     padding: 0 var(--spacing-400);
     /* 좌우 패딩만 유지: 32px */
@@ -334,7 +384,7 @@ body {
     /* Bold */
     border: none;
     /* 테두리 제거 */
-    border-radius: 28px;
+    border-radius: var(--border-radius);
     /* 둥근 모서리 */
     cursor: pointer;
     /* 마우스 커서를 포인터로 변경 */
@@ -369,9 +419,11 @@ body {
         background-position: right top;
         /* 이미지를 오른쪽 끝에 정렬 */
         background-size: 460px 860px;
-        /* 이미지를 460x868px 크기로 고정 */
+        /* 이미지를 460x860px 크기로 고정 */
         background-repeat: no-repeat;
         /* 반복 안 함 확인 */
+        background-attachment: fixed;
+        /* 배경 이미지를 뷰포트에 고정 (화면 비율 변화에 영향 없음) */
         padding: 0;
         /* 패딩 제거 */
         align-items: stretch;
@@ -410,6 +462,7 @@ body {
         background-size: auto;
         position: fixed;
         bottom: 90px;
+        /* 뷰포트 하단에서 90px (768px에서는 고정값 유지) */
         right: -120px;
         /* 오른쪽 하단 배치 */
         width: 232px;
@@ -626,16 +679,86 @@ body {
        버튼 호버 효과
        ==================================== */
     .btn--primary:hover {
-        background-color: #6FF0C0;
-        /* 호버 시 더 밝은 녹색 */
-        transform: translateY(-2px);
-        /* 살짝 위로 이동 */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        /* 그림자 증가 */
+        background-color: color-mix(in srgb, var(--color-green), white 50%);
+        /* 호버 시 녹색과 흰색을 50% 혼합한 밝은 색상 */
+    }
+}
+
+/* ====================================
+   데스크톱(1024px 이상)에서 추가 스타일 적용
+   ==================================== */
+@media (min-width: 1024px) {
+    body {
+        background-image: url('assets/desktop/image-host.jpg');
+        /* 데스크톱 배경 이미지 */
+        background-size: 960px 638px;
+        /* 배경 이미지 크기: 960x638px */
+        background-position: right center;
+        /* 오른쪽 기준으로 고정 (화면 크기 변화와 무관하게 유지) */
+        background-repeat: no-repeat;
+        /* 반복 안 함 */
+        background-attachment: fixed;
+        /* 배경 이미지를 뷰포트에 고정 (스크롤해도 위치 유지) */
+        padding: 0;
+        /* 기본 padding 제거 */
+        align-items: center;
+        /* 세로 중앙 정렬 명시 */
+        justify-content: center;
+        /* 가로 중앙 정렬 */
     }
 
-    .btn--primary:active {
-        transform: translateY(0);
-        /* 클릭 시 원래 위치로 */
+    .container {
+        width: 1120px;
+        /* 데스크톱 너비: 1120px */
+        height: 654px;
+        /* 데스크톱 높이: 654px */
+        max-width: 1120px;
+        /* 최대 너비 제한 */
+        margin: 0;
+        /* margin 제거 (body의 flexbox가 중앙 정렬 처리) */
+        padding: 0;
+        /* 패딩 삭제 */
+    }
+
+    .content-wrapper {
+        width: 736px;
+        /* 데스크톱용 콘텐츠 너비: 736px */
+        max-width: 736px;
+        /* 이전 미디어 쿼리의 592px 제한 해제 */
+    }
+
+    .signup {
+        margin-bottom: 0;
+        /* 에러 메시지가 마진 영역을 차지하도록 제거 */
+    }
+
+    #emailError {
+        margin-top: var(--spacing-100);
+        /* 입력 폼 아래 8px 간격 */
+        margin-bottom: var(--spacing-400);
+        /* 플랫폼 로고 위 32px 간격 (총 40px) */
+    }
+
+    .platforms {
+        padding-top: 0;
+        /* 768px의 패딩 초기화하여 정확한 40px 간격 유지 */
+        width: 547.65px;
+        /* 요청하신 너비: 547.65px */
+        height: auto;
+        /* 높이 자동 조정 */
+    }
+
+    .platforms__logo {
+        height: 21px;
+        /* 547.65px 너비에 맞춰 로고 크기 조정 */
+        width: auto;
+        /* 원본 비율 유지 */
+    }
+
+    body::after {
+        bottom: calc(50% - 475px + 105px);
+        /* 뷰포트 중앙(50%) - container 절반(327px) + 하단 여백(105px) = container 기준 고정 */
+        right: 0px;
+        /* 오른쪽 끝 */
     }
 }

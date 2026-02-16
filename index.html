@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description"
     content="Publish your podcasts to all platforms like Spotify, Apple Podcasts, Google Podcasts, and more.">
-  <title>Pod - Publish Your Podcasts Everywhere</title>
+  <title>Pod Request Access Landing Page</title>
 
   <!-- Google Fonts - Chivo -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,18 +18,66 @@
 </head>
 
 <body>
-  <!-- 메인 컨테이너 -->
+  <!-- 
+    ========================================
+    메인 컨테이너 (Main Container)
+    ========================================
+    
+    구조 개요:
+    - 모바일(~767px): 세로 중앙 정렬, 단일 컬럼
+    - 태블릿(768px~): 왼쪽 절반(50% width) 고정, 오른쪽은 배경 이미지
+    - 데스크톱(1024px~): 1120px 고정 너비, 화면 중앙 정렬
+    
+    레이아웃 의도:
+    배경 이미지가 오른쪽에 노출되도록 콘텐츠를 왼쪽에 배치하여
+    시각적 균형과 브랜드 이미지를 동시에 제공합니다.
+  -->
   <main class="container">
-    <!-- 로고 섹션 -->
+    <!-- 
+      ========================================
+      헤더 - 로고 섹션
+      ========================================
+      
+      접근성:
+      - <h1> 태그 사용으로 페이지의 주제(Pod 브랜드)를 명확히 전달
+      - 스크린 리더가 로고 이미지의 alt 텍스트를 읽어 브랜드명 인식
+    -->
     <header class="header">
       <h1 class="logo">
         <img src="assets/desktop/logo.svg" alt="pod" class="logo__img">
       </h1>
     </header>
 
-    <!-- 콘텐츠 래퍼: 메인 콘텐츠, 가입 폼, 에러 메시지를 하나로 묶음 -->
+    <!-- 
+      ========================================
+      콘텐츠 래퍼 (Content Wrapper)
+      ========================================
+      
+      역할:
+      - 히어로 섹션 + 이메일 폼 + 플랫폼 로고 + 에러 메시지를 하나로 묶음
+      - 768px 이상에서는 고정 너비(592px)로 가독성 확보
+      - 1024px 이상에서는 736px로 확대하여 데스크톱 경험 최적화
+      
+      디자인 의도:
+      미디어 쿼리별로 order 속성을 사용해 요소 순서를 재배치합니다.
+      (모바일: logo → hero → signup → platforms)
+      (태블릿 이상: logo → hero → signup → platforms, signup이 order:2로 이동)
+    -->
     <div class="content-wrapper">
-      <!-- 메인 콘텐츠 섹션 -->
+      <!-- 
+        ========================================
+        히어로 섹션 (Hero Section)
+        ========================================
+        
+        목적:
+        첫 화면에서 사용자에게 서비스 가치를 명확히 전달합니다.
+        - 강조 문구: "PUBLISH YOUR PODCASTS" (녹색)
+        - 일반 문구: "EVERYWHERE." (흰색)
+        
+        타이포그래피:
+        - 모바일: 32px (--font-size-title-medium)
+        - 데스크톱: 48px (--font-size-title-large)
+      -->
       <section class="hero">
         <h2 class="hero__title">
           <span class="hero__title--highlight">PUBLISH YOUR PODCASTS</span>
@@ -42,10 +90,34 @@
         </p>
       </section>
 
-      <!-- 이메일 가입 폼 섹션 -->
+      <!-- 
+        ========================================
+        이메일 가입 폼 섹션
+        ========================================
+        
+        UX 플로우:
+        1. 사용자가 이메일 입력
+        2. "Request Access" 버튼 클릭
+        3. script.js에서 유효성 검사 실행
+        4. 실패 시 → 빨간 테두리 + 하단에 에러 메시지 표시
+        5. 성공 시 → alert 알림 (실제 프로덕션: API 호출)
+        
+        접근성:
+        - novalidate: 브라우저 기본 검증 비활성화 (커스텀 검증 사용)
+        - aria-describedby: 에러 메시지와 입력 필드 연결
+        - aria-invalid: 에러 발생 시 스크린 리더에게 알림
+        - aria-live="polite": 에러 메시지 실시간 음성 안내
+      -->
       <section class="signup">
         <form class="signup__form" id="emailForm" novalidate>
           <div class="form-group">
+            <!-- 
+              접근성: visually-hidden 클래스
+              
+              Why: 시각적으로는 숨기지만 스크린 리더는 읽을 수 있도록 함
+              Result: 스크린 리더 사용자에게 "이메일 주소" 레이블을 제공하여
+                     입력 필드의 목적을 명확히 전달합니다.
+            -->
             <label for="email" class="visually-hidden">이메일 주소</label>
             <input type="email" id="email" name="email" class="form-group__input" placeholder="Email address"
               aria-describedby="emailError" required>
@@ -57,8 +129,26 @@
         </form>
       </section>
 
-      <!-- 플랫폼 로고 섹션 -->
-      <div class="platforms">
+      <!-- 
+        ========================================
+        플랫폼 로고 섹션
+        ========================================
+        
+        목적:
+        지원하는 주요 플랫폼(Spotify, Apple, Google, Pocket Casts)을
+        시각적으로 보여주어 신뢰도를 높입니다.
+        
+        접근성:
+        - <section> 사용으로 독립적인 콘텐츠 영역임을 명시
+        - visually-hidden <h2>로 스크린 리더에게 섹션 제목 제공
+        - 각 이미지의 alt 속성으로 플랫폼명 전달
+        
+        반응형:
+        - 모바일/태블릿: 로고 높이 17px, 가로 중앙 정렬
+        - 데스크톱(1024px~): 로고 높이 21px, 너비 547.65px로 축소
+      -->
+      <section class="platforms">
+        <h2 class="visually-hidden">지원하는 플랫폼</h2>
         <img src="assets/desktop/spotify.svg" alt="Spotify" class="platforms__logo" onerror="this.style.display='none'">
         <img src="assets/desktop/apple-podcast.svg" alt="Apple Podcasts" class="platforms__logo"
           onerror="this.style.display='none'">
@@ -66,9 +156,26 @@
           onerror="this.style.display='none'">
         <img src="assets/desktop/pocket-casts.svg" alt="Pocket Casts" class="platforms__logo"
           onerror="this.style.display='none'">
-      </div>
+      </section>
 
-      <!-- 에러 메시지 (signup 섹션 외부, 버튼 아래 위치) -->
+      <!-- 
+        ========================================
+        에러 메시지 (Form Validation Error)
+        ========================================
+        
+        Why 섹션 외부 배치:
+        에러 메시지가 나타날 때 폼 레이아웃이 틀어지는 것을 방지하고,
+        에러 메시지의 margin으로 platforms와의 간격(40px)을 제어합니다.
+        
+        접근성:
+        - aria-live="polite": 에러 메시지가 삽입되면 스크린 리더가
+          현재 읽고 있는 내용이 끝난 후 즉시 에러를 음성으로 알립니다.
+        
+        UX:
+        - 기본 상태: 빈 텍스트, min-height로 공간 확보
+        - 에러 발생: 빨간색 텍스트로 에러 메시지 표시
+        - 사용자 입력 시작: script.js에서 즉시 에러 메시지 제거
+      -->
       <p id="emailError" class="form-group__error" aria-live="polite"></p>
     </div>
   </main>
